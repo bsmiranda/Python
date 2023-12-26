@@ -33,6 +33,16 @@ def display_subtitle(text):
     print()
 
 def register_new_restaurant():
+    '''This role is responsible for registering a new restaurant
+
+    Inputs:
+    - Name of restaurant
+    - Category
+
+    Outputs:
+    - Adds a new restaurant to the restaurant list
+    '''
+
     display_subtitle('Registration of new restaurants')
     name_of_restaurant = input('Enter the name of the restaurant you want to register: ')
     category = input(f'Enter the name of the restaurant category {name_of_restaurant}: ')
@@ -43,6 +53,7 @@ def register_new_restaurant():
     return_to_main_menu()
 
 def list_restaurants():
+    '''This function lists existing restaurants'''
     display_subtitle('Listing restaurants')
     print(f'{'Name of restaurant'.ljust(22)} | {'Category'.ljust(20)} | Status')
     for restaurant in restaurants:
@@ -54,6 +65,7 @@ def list_restaurants():
     return_to_main_menu()
 
 def toggle_restaurant_status():
+    '''This function is responsible for switching restaurants between active or deactivated'''
     display_subtitle('Changing restaurant status')
     restaurant_name = input('Enter the name of the restaurant you want to change the status of: ')
     restaurant_found = False
@@ -71,6 +83,7 @@ def toggle_restaurant_status():
     return_to_main_menu()
 
 def choose_option():
+    '''This function contains decisions based on user choice'''
     try:
         chosen_option = int(input('Choose an option: '))
 
