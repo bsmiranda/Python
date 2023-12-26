@@ -1,21 +1,23 @@
 import os
 
-restaurants = ['Pizza', 'Sushi']
+restaurants = [{'name': 'Sushi Saque', 'category': 'japanese food', 'active': False},
+               {'name': 'Sapori', 'category': 'italian food', 'active': False},
+               {'name': 'Chimarron', 'category': 'barbecue', 'active': False}]
 
 def display_program_name():
-    print('EXPRESS RESTAURANT')
+    print('EXPRESS RESTAURANT\n')
 
 def display_options():
     print('1. Register restaurant')
     print('2. List restaurant')
-    print('3. Activate restaurant')
+    print('3. Toggle restaurant status')
     print('4. Exit\n')
 
 def finalize_app():
-    display_subtitle('Finish app')
+    display_subtitle('Finalize app')
 
 def return_to_main_menu():
-    input('\nEnter a key to return to the menu ')
+    input('\nType any key to return to the menu: ')
     main()
 
 def invalid_option():
@@ -24,45 +26,72 @@ def invalid_option():
 
 def display_subtitle(text):
     os.system('clear')
+    line = '*' * (len(text))
+    print(line)
     print(text)
+    print(line)
     print()
 
 def register_new_restaurant():
     display_subtitle('Registration of new restaurants')
-    restaurant_name = input('Enter the name of the restaurant you wish to register: ')
-    restaurants.append(restaurant_name)
-    print(f'The restaurant {restaurant_name} was successfully registered!')
-    
-    return_to_main_menu()
+    name_of_restaurant = input('Enter the name of the restaurant you want to register: ')
+    category = input(f'Enter the name of the restaurant category {name_of_restaurant}: ')
+    data_of_restaurant = {'name':name_of_restaurant, 'category': category, 'active': False}
+    restaurants.append(data_of_restaurant)
+    print(f'The restaurant {name_of_restaurant} has been successfully registered.')
 
+    return_to_main_menu()
 
 def list_restaurants():
     display_subtitle('Listing restaurants')
+    print(f'{'Name of restaurant'.ljust(22)} | {'Category'.ljust(20)} | Status')
     for restaurant in restaurants:
-        print(f'.{restaurant}')
+        restaurant_name = restaurant['name']
+        category = restaurant['category']
+        active = 'activated' if restaurant['active'] else 'disable'
+        print(f'- {restaurant_name.ljust(20)} | {category.ljust(20)} | {active}')
+
     return_to_main_menu()
 
-def chose_option():
+def toggle_restaurant_status():
+    display_subtitle('Changing restaurant status')
+    restaurant_name = input('Enter the name of the restaurant you want to change the status of: ')
+    restaurant_found = False
+
+    for restaurant in restaurants:
+        if restaurant_name == restaurant['name']:
+            restaurant_found = True
+            restaurant['active'] = not restaurant['active']
+            message = f'The restaurant {restaurant_name} it has been activated successfully' if restaurant['active'] else f'The restaurant {restaurant_name} it has been successfully deactivated.'
+            print(message)
+        
+    if not restaurant_found:
+        print('The restaurant was not found')
+    
+    return_to_main_menu()
+
+def choose_option():
     try:
         chosen_option = int(input('Choose an option: '))
+
         if chosen_option == 1:
             register_new_restaurant()
         elif chosen_option == 2:
             list_restaurants()
         elif chosen_option == 3:
-            print('Activate restaurant')
+            toggle_restaurant_status()
         elif chosen_option == 4:
             finalize_app()
         else:
             invalid_option()
     except:
         invalid_option()
-
+    
 def main():
     os.system('clear')
     display_program_name()
     display_options()
-    chose_option()
+    choose_option()
 
 if __name__ == '__main__':
     main()
